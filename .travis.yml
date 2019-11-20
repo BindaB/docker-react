@@ -8,4 +8,19 @@ before_install:
 #commands to run
 script:
   - docker run -e CI=true bindabernardo/docker-react npm run test -- --coverage
-  
+
+deploy:
+  #edge: true
+  provider: elasticbeanstalk
+  region:  "us-east-2"
+  app: "docker-react"
+  env: "DockerReact-env"
+  bucket_name: "elasticbeanstalk-us-east-2-217300358290"
+  bucket_path: "docker-react"
+  #specify what branch you want to have "watched", if the branch is listed below
+  #then travis will run on that branch and, if hooked up with aws, will deploy said
+  #branch.
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
